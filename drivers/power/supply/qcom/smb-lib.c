@@ -2025,26 +2025,27 @@ static int smblib_fb_notifier_cb(struct notifier_block *self,
 	struct smb_charger *chg =
 		container_of(self, struct smb_charger, smb_fb_notif);
 
+	if (event != FB_EVENT_BLANK)
+		return 0;
+
 	mutex_lock(&chg->screen_lock);
 	if (evdata && evdata->data && chg) {
-		if (event == FB_EARLY_EVENT_BLANK) {
-			blank = evdata->data;
-			if (*blank == FB_BLANK_UNBLANK) {
-				chg->screen_on = true;
-				pr_info("%s: screen_on\n", __func__);
-				screen_check_ms = SCREEN_ON_CHECK_MS;
-			} else if (*blank == FB_BLANK_POWERDOWN) {
-				chg->screen_on = false;
-				pr_info("%s: screen_off\n", __func__);
-				screen_check_ms = SCREEN_OFF_CHECK_MS;
-			}
-			if (!chg->checking_in_progress &&
-				((*blank == FB_BLANK_UNBLANK) ||
-				 (*blank == FB_BLANK_POWERDOWN))) {
-				chg->checking_in_progress = true;
-				schedule_delayed_work(&chg->screen_on_work,
-				msecs_to_jiffies(screen_check_ms));
-			}
+		blank = evdata->data;
+		if (*blank == FB_BLANK_UNBLANK) {
+			chg->screen_on = true;
+			pr_info("%s: screen_on\n", __func__);
+			screen_check_ms = SCREEN_ON_CHECK_MS;
+		} else if (*blank == FB_BLANK_POWERDOWN) {
+			chg->screen_on = false;
+			pr_info("%s: screen_off\n", __func__);
+			screen_check_ms = SCREEN_OFF_CHECK_MS;
+		}
+		if (!chg->checking_in_progress &&
+			((*blank == FB_BLANK_UNBLANK) ||
+				(*blank == FB_BLANK_POWERDOWN))) {
+			chg->checking_in_progress = true;
+			schedule_delayed_work(&chg->screen_on_work,
+			msecs_to_jiffies(screen_check_ms));
 		}
 	} else {
 		pr_err("%s: Couldn't get fb event\n", __func__);
