@@ -245,13 +245,7 @@ struct timespec current_fs_time(struct super_block *sb)
 }
 EXPORT_SYMBOL(current_fs_time);
 
-/*
- * Convert jiffies to milliseconds and back.
- *
- * Avoid unnecessary multiplications/divisions in the
- * two most common HZ cases:
- */
-unsigned int jiffies_to_msecs(const unsigned long j)
+static unsigned __always_inline int __jiffies_to_msecs(const unsigned long j)
 {
 #if HZ <= MSEC_PER_SEC && !(MSEC_PER_SEC % HZ)
 	return (MSEC_PER_SEC / HZ) * j;
@@ -266,9 +260,23 @@ unsigned int jiffies_to_msecs(const unsigned long j)
 # endif
 #endif
 }
+
+/*
+ * Convert jiffies to milliseconds and back.
+ *
+ * Avoid unnecessary multiplications/divisions in the
+ * two most common HZ cases:
+ */
+unsigned int jiffies_to_msecs(const unsigned long j)
+{
+	if (__builtin_constant_p(j)) {	
+		return __jiffies_to_msecs(j);
+	}
+	return __jiffies_to_msecs(j);
+}
 EXPORT_SYMBOL(jiffies_to_msecs);
 
-unsigned int jiffies_to_usecs(const unsigned long j)
+static unsigned __always_inline int __jiffies_to_usecs(const unsigned long j)
 {
 	/*
 	 * Hz usually doesn't go much further MSEC_PER_SEC.
@@ -285,6 +293,14 @@ unsigned int jiffies_to_usecs(const unsigned long j)
 	return (j * HZ_TO_USEC_NUM) / HZ_TO_USEC_DEN;
 # endif
 #endif
+}
+
+unsigned int jiffies_to_usecs(const unsigned long j)
+{
+	if (__builtin_constant_p(j)) {	
+		return __jiffies_to_usecs(j);
+	}
+	return __jiffies_to_usecs(j);
 }
 EXPORT_SYMBOL(jiffies_to_usecs);
 
