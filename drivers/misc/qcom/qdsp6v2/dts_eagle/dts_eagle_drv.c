@@ -632,4 +632,7 @@ MODULE_AUTHOR("Magesh Devaprakash <magesh.devaprakash@dts.com>");
 MODULE_DESCRIPTION("dts eagle drv() char driver");
 
 /* DTS_EAGLE END */
+<<<<<<< HEAD
 
+=======
+>>>>>>> 67fd73e... drivers: Initial import of DTS-Eagle driver
