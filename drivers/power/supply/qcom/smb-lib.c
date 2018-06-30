@@ -2278,10 +2278,10 @@ int smblib_set_prop_system_temp_level(struct smb_charger *chg,
 					chg->thermal_mitigation_qc2[chg->system_temp_level]);
 			else if (chg->system_temp_level < 3) {
 				vote(chg->usb_icl_votable, THERMAL_DAEMON_VOTER, true,
-					(chg->thermal_mitigation_qc2[chg->system_temp_level] * 70 / 100));
+					(chg->thermal_mitigation_qc2[chg->system_temp_level] * 80 / 100));
 			} else {
 				vote(chg->usb_icl_votable, THERMAL_DAEMON_VOTER, true,
-					(chg->thermal_mitigation_qc2[chg->system_temp_level] * 50 / 100)); }
+					(chg->thermal_mitigation_qc2[chg->system_temp_level] * 60 / 100)); }
 		} else
 			vote(chg->usb_icl_votable, THERMAL_DAEMON_VOTER, true,
 				chg->thermal_mitigation_qc2[chg->system_temp_level]);
@@ -2293,10 +2293,10 @@ int smblib_set_prop_system_temp_level(struct smb_charger *chg,
 					chg->thermal_mitigation_qc3[chg->system_temp_level]);
 			else if (chg->system_temp_level < 3) {
 				vote(chg->usb_icl_votable, THERMAL_DAEMON_VOTER, true,
-					(chg->thermal_mitigation_qc3[chg->system_temp_level] * 70 / 100));
+					(chg->thermal_mitigation_qc3[chg->system_temp_level] * 80/ 100));
 			} else {
 				vote(chg->usb_icl_votable, THERMAL_DAEMON_VOTER, true,
-					(chg->thermal_mitigation_qc3[chg->system_temp_level] * 50 / 100)); }
+					(chg->thermal_mitigation_qc3[chg->system_temp_level] * 60 / 100)); }
 		} else
 			vote(chg->usb_icl_votable, THERMAL_DAEMON_VOTER, true,
 				chg->thermal_mitigation_qc3[chg->system_temp_level]);

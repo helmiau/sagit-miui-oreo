@@ -37,7 +37,7 @@ static struct smb_params v1_params = {
 		.name	= "fast charge current",
 		.reg	= FAST_CHARGE_CURRENT_CFG_REG,
 		.min_u	= 0,
-		.max_u	= 3300000,
+		.max_u	= 4500000,
 		.step_u	= 25000,
 	},
 	.fv			= {
@@ -51,7 +51,7 @@ static struct smb_params v1_params = {
 		.name	= "usb input current limit",
 		.reg	= USBIN_CURRENT_LIMIT_CFG_REG,
 		.min_u	= 0,
-		.max_u	= 3000000,
+		.max_u	= 3600000,
 		.step_u	= 25000,
 	},
 	.icl_stat		= {
@@ -65,7 +65,7 @@ static struct smb_params v1_params = {
 		.name	= "usb otg current limit",
 		.reg	= OTG_CURRENT_LIMIT_CFG_REG,
 		.min_u	= 250000,
-		.max_u	= 1500000,
+		.max_u	= 2000000,
 		.step_u	= 250000,
 	},
 	.dc_icl			= {
