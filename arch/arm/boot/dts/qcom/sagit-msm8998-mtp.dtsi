@@ -892,6 +892,7 @@
 		 linux,name = "button-backlight1";
 };
 &pmi8998_charger {
+		 qcom,fv-max-uv = <4325000>;
 		 qcom,usb-icl-ua = <3000000>;
 		 qcom,fcc-max-ua = <3300000>;
 		 qcom,fcc-low-temp-delta = <2875000>;
