@@ -153,6 +153,13 @@ config CPU_FREQ_GOV_POWERSAVE
 
 	  If in doubt, say Y.
 
+config CPU_FREQ_DEFAULT_GOV_DARKNESS
+	bool "darkness"
+	depends on EXPERT
+	select CPU_FREQ_GOV_DARKNESS
+	help
+	  Use the CPUFreq governor 'darkness' as default. WJH
+
 config CPU_FREQ_GOV_USERSPACE
 	tristate "'userspace' governor for userspace frequency scaling"
 	help
@@ -266,6 +273,14 @@ config CPU_FREQ_GOV_SCHEDUTIL
 	  If in doubt, say N.
 
 comment "CPU frequency scaling drivers"
+
+config CPU_FREQ_GOV_DARKNESS
+	tristate "'darkness' governor"
+	help
+		The cpufreq governor darkness. WJH
+		To compile this driver as a module, choose M here: the
+		module will be called cpufreq_darkness.
+
 
 config CPUFREQ_DT
 	tristate "Generic DT based cpufreq driver"
