@@ -1236,4 +1236,8 @@ config TOUCHSCREEN_ST
 
 source "drivers/input/touchscreen/st/Kconfig"
 
+config TOUCHSCREEN_SWEEP2WAKE
+        bool "Sweep2Wake for touchscreens"
+        default n
+
 endif
