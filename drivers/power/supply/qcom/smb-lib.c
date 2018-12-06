@@ -1019,8 +1019,8 @@ static int set_sdp_current(struct smb_charger *chg, int icl_ua)
 	const struct apsd_result *apsd_result = smblib_get_apsd_result(chg);
 
 	if (icl_ua == USBIN_500MA){
-		icl_ua = USBIN_1000MA;
-		pr_info("Trigger USB charge with 1000mA\n");
+		icl_ua = USBIN_900MA;
+		pr_info("Trigger USB charge with 900mA\n");
 	}
 
 	/* power source is SDP */
