@@ -953,12 +953,3 @@ config SERIAL_NUM
 	  Provide a interface for reading CPU serial number
 
 source "drivers/soc/qcom/memshare/Kconfig"
-
-config AUTOSMP
-	bool "Multi-core automatic hotplug support"
-	depends on SMP && HOTPLUG_CPU
-	default n
-	help
-	  Automatically hotplugs the multiple cpu cores on and off
-	  based on cpu load and suspend state.
-
