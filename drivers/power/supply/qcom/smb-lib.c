@@ -1015,7 +1015,7 @@ static int smblib_get_pulse_cnt(struct smb_charger *chg, int *count)
 #define USBIN_150MA	150000
 #define USBIN_500MA	500000
 #define USBIN_900MA	900000
-#define USBIN_1000MA	1000000
+#define USBIN_1500MA	1000000
 
 static int set_sdp_current(struct smb_charger *chg, int icl_ua)
 {
@@ -1026,7 +1026,7 @@ static int set_sdp_current(struct smb_charger *chg, int icl_ua)
 #ifdef CONFIG_FORCE_FAST_CHARGE
 	if (force_fast_charge > 0 && icl_ua == USBIN_500MA)
 	{
-		icl_ua = USBIN_1000MA;
+		icl_ua = USBIN_1500MA;
 		pr_info("Trigger USB charge with 1000mA\n");
 	}
 #endif
