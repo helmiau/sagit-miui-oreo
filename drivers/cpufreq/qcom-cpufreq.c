@@ -361,8 +361,6 @@ static struct cpufreq_frequency_table *cpufreq_parse_dt(struct device *dev,
 		if (j > 0 && f <= ftbl[j - 1].frequency)
 			continue;
 
-		}
-
 		ftbl[j].driver_data = j;
 		ftbl[j].frequency = f;
 		j++;
