@@ -37,11 +37,9 @@
  *	- LZ4 homepage : http://www.lz4.org
  *	- LZ4 source repository : https://github.com/lz4/lz4
  */
-<<<<<<< HEAD
-=======
+
 #define LZ4_MEM_COMPRESS	(4096 * sizeof(unsigned char *))
 #define LZ4HC_MEM_COMPRESS	(65538 * sizeof(unsigned char *))
->>>>>>> parent of 357ec46... UPSTREAM: lz4: fix wrong compress buffer size for 64-bits
 
 #ifndef __LZ4_H__
 #define __LZ4_H__
