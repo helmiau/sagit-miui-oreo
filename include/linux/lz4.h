@@ -1,5 +1,3 @@
-#ifndef __LZ4_H__
-#define __LZ4_H__
 /*
  * LZ4 Kernel Interface
  *
