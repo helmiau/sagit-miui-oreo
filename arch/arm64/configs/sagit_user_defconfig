@@ -730,7 +730,7 @@ CONFIG_HAVE_EBPF_JIT=y
 # Power management options
 CONFIG_WQ_POWER_EFFICIENT_DEFAULT=y
 
-#Hotplug
+# Hotplug
 # CONFIG_AUTOSMP is not set
 
 #Fast Charge
