@@ -689,3 +689,5 @@ CONFIG_SERIAL_NUM=y
 
 # cpuset totally exlusive support for vr
 CONFIG_CPUSET_EXCLUSIVE_IND=y
+
+CONFIG_FORCE_FAST_CHARGE=y
