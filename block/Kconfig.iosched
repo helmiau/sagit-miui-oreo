@@ -32,10 +32,31 @@ config IOSCHED_DEADLINE
 	  a new point in the service tree and doing a batch of IO from there
 	  in case of expiry.
 
+<<<<<<< HEAD
 config IOSCHED_MAPLE
 	tristate "Maple I/O scheduler"
 	depends on FB
 
+=======
+config IOSCHED_BFQ
+	tristate "BFQ I/O scheduler"
+	default n
+	---help---
+	The BFQ I/O scheduler distributes bandwidth among all
+	processes according to their weights, regardless of the
+	device parameters and with any workload. It also guarantees
+	a low latency to interactive and soft real-time applications.
+	Details in Documentation/block/bfq-iosched.txt
+
+config BFQ_GROUP_IOSCHED
+	bool "BFQ hierarchical scheduling support"
+	depends on IOSCHED_BFQ && BLK_CGROUP
+	default n
+	---help---
+
+	Enable hierarchical scheduling in BFQ, using the blkio
+	(cgroups-v1) or io (cgroups-v2) controller.
+>>>>>>> c1e30f9580382aabd03dc17bfb698d4b902b31bd
 
 config IOSCHED_CFQ
 	tristate "CFQ I/O scheduler"
@@ -73,6 +94,7 @@ config CFQ_GROUP_IOSCHED
 	---help---
 	  Enable group IO scheduling in CFQ.
 
+<<<<<<< HEAD
 
 config IOSCHED_BFQ
 	tristate "BFQ I/O scheduler"
@@ -96,10 +118,22 @@ config BFQ_GROUP_IOSCHED
 config IOSCHED_ZEN
 	tristate "Zen I/O scheduler"
 	default y
+=======
+config IOSCHED_ZEN
+	tristate "Zen I/O scheduler"
+	default n
+>>>>>>> c1e30f9580382aabd03dc17bfb698d4b902b31bd
 	---help---
 	FCFS, dispatches are back-inserted, deadlines ensure fairness.
 	Should work best with devices where there is no travel delay.
 
+<<<<<<< HEAD
+=======
+config IOSCHED_MAPLE
+	tristate "Maple I/O scheduler"
+	default n
+
+>>>>>>> c1e30f9580382aabd03dc17bfb698d4b902b31bd
 config IOSCHED_SWITCHER
 	bool "Use Noop while the screen is off"
 	depends on IOSCHED_NOOP
@@ -120,6 +154,16 @@ choice
 
 	config DEFAULT_DEADLINE
 		bool "Deadline" if IOSCHED_DEADLINE=y
+
+	config DEFAULT_BFQ
+		bool "BFQ" if IOSCHED_BFQ=y
+		help
+		  Selects BFQ as the default I/O scheduler which will be
+		  used by default for all block devices.
+		  The BFQ I/O scheduler aims at distributing the bandwidth
+		  as desired, independently of the disk parameters and with
+		  any workload. It also tries to guarantee low latency to
+		  interactive and soft real-time applications.
 
 	config DEFAULT_CFQ
 		bool "CFQ" if IOSCHED_CFQ=y

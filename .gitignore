@@ -114,4 +114,8 @@ all.config
 # Kdevelop4
 *.kdev4
 
+<<<<<<< HEAD
 out
+=======
+/out
+>>>>>>> c1e30f9580382aabd03dc17bfb698d4b902b31bd
