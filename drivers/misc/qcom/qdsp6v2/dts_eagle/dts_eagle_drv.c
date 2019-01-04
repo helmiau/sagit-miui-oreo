@@ -17,32 +17,6 @@
 #define DTS_EAGLE_DRIVER_MINOR_CNT      6
 
 enum {
-<<<<<<< HEAD
-	AUDIO_DEVICE_OUT_EARPIECE = 0,
-	AUDIO_DEVICE_OUT_SPEAKER,
-	AUDIO_DEVICE_OUT_WIRED_HEADSET,
-	AUDIO_DEVICE_OUT_WIRED_HEADPHONE,
-	AUDIO_DEVICE_OUT_BLUETOOTH_SCO,
-	AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET,
-	AUDIO_DEVICE_OUT_BLUETOOTH_SCO_CARKIT,
-	AUDIO_DEVICE_OUT_BLUETOOTH_A2DP,
-	AUDIO_DEVICE_OUT_BLUETOOTH_A2DP_HEADPHONES,
-	AUDIO_DEVICE_OUT_BLUETOOTH_A2DP_SPEAKER,
-	AUDIO_DEVICE_OUT_AUX_DIGITAL,
-	AUDIO_DEVICE_OUT_ANLG_DOCK_HEADSET,
-	AUDIO_DEVICE_OUT_DGTL_DOCK_HEADSET,
-	AUDIO_DEVICE_OUT_USB_ACCESSORY,
-	AUDIO_DEVICE_OUT_USB_DEVICE,
-	AUDIO_DEVICE_OUT_REMOTE_SUBMIX,
-	AUDIO_DEVICE_OUT_ANC_HEADSET,
-	AUDIO_DEVICE_OUT_ANC_HEADPHONE,
-	AUDIO_DEVICE_OUT_PROXY,
-	AUDIO_DEVICE_OUT_FM,
-	AUDIO_DEVICE_OUT_FM_TX,
-	AUDIO_DEVICE_OUT_COUNT
-};
-#define AUDIO_DEVICE_COMBO 0x400000 /* bit 23 */
-=======
 	AUDIO_DEVICE_OUT_EARPIECE = 0x1,
 	AUDIO_DEVICE_OUT_SPEAKER = 0x2,
 	AUDIO_DEVICE_OUT_WIRED_HEADSET = 0x4,
@@ -59,7 +33,6 @@ enum {
 #define DEVICE_OUT_ALL_BLUETOOTH (AUDIO_DEVICE_OUT_BLUETOOTH_SCO | AUDIO_DEVICE_OUT_BLUETOOTH_SCO_HEADSET | \
 				  AUDIO_DEVICE_OUT_BLUETOOTH_SCO_CARKIT | AUDIO_DEVICE_OUT_BLUETOOTH_A2DP | \
 				  AUDIO_DEVICE_OUT_BLUETOOTH_A2DP_HEADPHONES | AUDIO_DEVICE_OUT_BLUETOOTH_A2DP_SPEAKER)
->>>>>>> c1e30f9580382aabd03dc17bfb698d4b902b31bd
 
 enum {                  /* cache block */
 	CB_0 = 0,
@@ -87,20 +60,10 @@ enum {                  /* cache block description */
 	CBD_OFFS3,
 	CBD_CMD3,
 	CBD_SZ3,
-<<<<<<< HEAD
-	CBD_COUNT,
-};
-
-/* pr_debug */
-#define dts_eagle_drv_dbg_msg(fmt, ...)  \
-	(printk(KERN_INFO "DTS_EAGLE_DRIVER: " fmt "\n", ##__VA_ARGS__))
-
-=======
 	CBD_SR,
 	CBD_COUNT,
 };
 
->>>>>>> c1e30f9580382aabd03dc17bfb698d4b902b31bd
 /* pr_err */
 #define dts_eagle_drv_err_msg(fmt, ...)  \
 	(printk(KERN_INFO "DTS_EAGLE_DRIVER: " fmt "\n", ##__VA_ARGS__))
@@ -143,14 +106,6 @@ static void _init_cb_descs(void)
 		_c_bl[i][CBD_CMD1] = _c_bl[i][CBD_SZ1] =
 		_c_bl[i][CBD_CMD2] = _c_bl[i][CBD_SZ2] =
 		_c_bl[i][CBD_CMD3] = _c_bl[i][CBD_SZ3] = 0;
-<<<<<<< HEAD
-	}
-}
-
-static s32 _get_cb_for_dev(int device)
-{
-	s32 i;
-=======
 
 		_c_bl[i][CBD_SR] = 48000;
 	}
@@ -161,7 +116,6 @@ static s32 _get_cb_for_dev(int device, unsigned int rate )
 {
 	s32 i;
 	const int multi_rate_devices = DEVICE_OUT_ALL_BLUETOOTH|AUDIO_DEVICE_OUT_USB_DEVICE;
->>>>>>> c1e30f9580382aabd03dc17bfb698d4b902b31bd
 
 	if (device & AUDIO_DEVICE_COMBO) {
 		for (i = 0; i < CB_COUNT; i++) {
@@ -170,11 +124,6 @@ static s32 _get_cb_for_dev(int device, unsigned int rate )
 		}
 	} else {
 		for (i = 0; i < CB_COUNT; i++) {
-<<<<<<< HEAD
-			if ((_c_bl[i][CBD_DEV_MASK] & device) &&
-			     !(_c_bl[i][CBD_DEV_MASK] & AUDIO_DEVICE_COMBO))
-				return i;
-=======
 			int cb_dev = _c_bl[i][CBD_DEV_MASK];
 			if ((cb_dev & device) && !(cb_dev & AUDIO_DEVICE_COMBO)) {
 				if (cb_dev & multi_rate_devices) {
@@ -187,7 +136,6 @@ static s32 _get_cb_for_dev(int device, unsigned int rate )
 					return i;
 				}
 			}
->>>>>>> c1e30f9580382aabd03dc17bfb698d4b902b31bd
 		}
 	}
 	dts_eagle_drv_err_msg("%s: device %i not found", __func__, device);
@@ -287,11 +235,7 @@ static long dts_eagle_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
 		}
 
 		depd.device &= DTS_EAGLE_FLAG_IOCTL_MASK;
-<<<<<<< HEAD
-		cb = _get_cb_for_dev(depd.device);
-=======
 		cb = _get_cb_for_dev(depd.device, depd.rate);
->>>>>>> c1e30f9580382aabd03dc17bfb698d4b902b31bd
 		if (cb < 0) {
 			dts_eagle_drv_err_msg("%s: no cache for device %i found",
 				 __func__, depd.device);
@@ -346,11 +290,7 @@ static long dts_eagle_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
 		}
 
 		depd.device &= DTS_EAGLE_FLAG_IOCTL_MASK;
-<<<<<<< HEAD
-		tgt = _get_cb_for_dev(depd.device);
-=======
 		tgt = _get_cb_for_dev(depd.device, depd.rate);
->>>>>>> c1e30f9580382aabd03dc17bfb698d4b902b31bd
 		if (tgt < 0) {
 			dts_eagle_drv_err_msg("%s: no cache for device %i found",
 				 __func__, depd.device);
@@ -404,13 +344,8 @@ static long dts_eagle_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
 			return -EINVAL;
 		}
 
-<<<<<<< HEAD
-		dts_eagle_drv_dbg_msg("%s: cache block %i set: devices 0x%X, global offset %u, offsets 1:%u 2:%u 3:%u, cmds/sizes 0:0x%X %u 1:0x%X %u 2:0x%X %u 3:0x%X %u",
-			__func__, cb, _c_bl[cb][CBD_DEV_MASK],
-=======
 		dts_eagle_drv_dbg_msg("%s: cache block %i set: devices 0x%X, rate = %u, global offset %u, offsets 1:%u 2:%u 3:%u, cmds/sizes 0:0x%X %u 1:0x%X %u 2:0x%X %u 3:0x%X %u",
 			__func__, cb, _c_bl[cb][CBD_DEV_MASK], _c_bl[cb][CBD_SR],
->>>>>>> c1e30f9580382aabd03dc17bfb698d4b902b31bd
 			_c_bl[cb][CBD_OFFSG], _c_bl[cb][CBD_OFFS1],
 			_c_bl[cb][CBD_OFFS2], _c_bl[cb][CBD_OFFS3],
 			_c_bl[cb][CBD_CMD0], _c_bl[cb][CBD_SZ0],
@@ -457,17 +392,11 @@ static long dts_eagle_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
 
 	case DTS_EAGLE_IOCTL_GET_CACHE_PREMIX:{
 		int offset, cidx = -1, size;
-<<<<<<< HEAD
-=======
 		struct dts_eagle_cache_block pre_cb;
->>>>>>> c1e30f9580382aabd03dc17bfb698d4b902b31bd
 
 		dts_eagle_drv_dbg_msg("%s: control 0x%X (get param)",
 			__func__, cmd);
 
-<<<<<<< HEAD
-		cidx = _get_cb_for_dev(_device_primary);
-=======
 
 		if (copy_from_user((void *)&pre_cb, (void *)arg, sizeof(pre_cb))) {
 			dts_eagle_drv_err_msg("%s: error copying dts_eagle_cache_block (src:%p, tgt:%p, size:%zu)",
@@ -477,7 +406,6 @@ static long dts_eagle_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
 		}
 
 		cidx = _get_cb_for_dev(_device_primary, pre_cb.rate);
->>>>>>> c1e30f9580382aabd03dc17bfb698d4b902b31bd
 		if (cidx < 0) {
 			up(&lock);
 			return -EINVAL;
@@ -501,19 +429,11 @@ static long dts_eagle_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
 			*((int *)&_depc[offset+8]), *((int *)&_depc[offset+12]),
 			*((int *)&_depc[offset+16]), *((int *)&_depc[offset+20]));
 
-<<<<<<< HEAD
-		dts_eagle_drv_dbg_msg("%s: sending full data block, with cache index = %d device mask 0x%X, param = 0x%X, offset = %d, and size = %d",
-			 __func__, cidx, _c_bl[cidx][CBD_DEV_MASK],
-			 cmd, offset, size);
-
-		if (copy_to_user((void *)arg, &_depc[offset], size)) {
-=======
 		dts_eagle_drv_dbg_msg("%s: sending full data block, with cache index = %d device mask 0x%X, rate = %u, param = 0x%X, offset = %d, and size = %d",
 			 __func__, cidx, _c_bl[cidx][CBD_DEV_MASK], _c_bl[cidx][CBD_SR],
 			 cmd, offset, size);
 
 		if (copy_to_user(pre_cb.data, &_depc[offset], size)) {
->>>>>>> c1e30f9580382aabd03dc17bfb698d4b902b31bd
 			dts_eagle_drv_err_msg("%s: error copying premix data to userspace",
 				 __func__);
 			up(&lock);
@@ -524,17 +444,11 @@ static long dts_eagle_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
 
 	case DTS_EAGLE_IOCTL_GET_CACHE_POSTMIX: {
 		int offset, cidx = -1, size;
-<<<<<<< HEAD
-=======
 		struct dts_eagle_cache_block post_cb;
->>>>>>> c1e30f9580382aabd03dc17bfb698d4b902b31bd
 
 		dts_eagle_drv_dbg_msg("%s: control 0x%X (get param)",
 			__func__, cmd);
 
-<<<<<<< HEAD
-		cidx = _get_cb_for_dev(_device_primary);
-=======
 
 		if (copy_from_user((void *)&post_cb, (void *)arg, sizeof(post_cb))) {
 			dts_eagle_drv_err_msg("%s: error copying dts_eagle_cache_block (src:%p, tgt:%p, size:%zu)",
@@ -544,7 +458,6 @@ static long dts_eagle_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
 		}
 
 		cidx = _get_cb_for_dev(_device_primary, post_cb.rate);
->>>>>>> c1e30f9580382aabd03dc17bfb698d4b902b31bd
 		if (cidx < 0) {
 			up(&lock);
 			return -EINVAL;
@@ -568,19 +481,11 @@ static long dts_eagle_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
 			*((int *)&_depc[offset+8]), *((int *)&_depc[offset+12]),
 			*((int *)&_depc[offset+16]), *((int *)&_depc[offset+20]));
 
-<<<<<<< HEAD
-		dts_eagle_drv_dbg_msg("%s: sending full data block, with cache index = %d device mask 0x%X, param = 0x%X, offset = %d, and size = %d",
-			 __func__, cidx, _c_bl[cidx][CBD_DEV_MASK],
-			cmd, offset, size);
-
-		if (copy_to_user((void *)arg, &_depc[offset], size)) {
-=======
 		dts_eagle_drv_dbg_msg("%s: sending full data block, with cache index = %d device mask 0x%X, rate = %u, param = 0x%X, offset = %d, and size = %d",
 			 __func__, cidx, _c_bl[cidx][CBD_DEV_MASK], _c_bl[cidx][CBD_SR],
 			cmd, offset, size);
 
 		if (copy_to_user(post_cb.data, &_depc[offset], size)) {
->>>>>>> c1e30f9580382aabd03dc17bfb698d4b902b31bd
 			dts_eagle_drv_err_msg("%s: error copying postmix data to userspace",
 				 __func__);
 			up(&lock);
@@ -747,7 +652,3 @@ MODULE_AUTHOR("Magesh Devaprakash <magesh.devaprakash@dts.com>");
 MODULE_DESCRIPTION("dts eagle drv() char driver");
 
 /* DTS_EAGLE END */
-<<<<<<< HEAD
-
-=======
->>>>>>> c1e30f9580382aabd03dc17bfb698d4b902b31bd
